@@ -1,177 +1,245 @@
 <!DOCTYPE html>
-<html>
+<html lang="bn">
 <head>
-    <title>Ananto ❤️ Roza</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>এনিমেটেড ইম্প্রেসিভ পেজ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family: 'Poppins', sans-serif;
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background: #0f172a;
+            color: white;
+            overflow-x: hidden;
         }
 
-        body{
-            display:flex;
-            justify-content:center;
-            align-items:center; 
-            flex-direction:column;
-            height:100vh;
-            background:linear-gradient(-45deg,#ff4e8a,#ff9a9e,#fad0c4,#ffdde1);
-            background-size:400% 400%;
-            animation:gradientBG 8s ease infinite;
-            overflow:hidden;
-            text-align:center;
-            color:white;
+        /* কণা বা পার্টিকেল স্টাইল */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
         }
 
-        @keyframes gradientBG {
-            0%{background-position:0% 50%;}
-            50%{background-position:100% 50%;}
-            100%{background-position:0% 50%;}
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
         }
 
-        h1{
-            font-size:40px;
-            margin-bottom:15px;
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        #typing{
-            font-size:24px;
-            margin-bottom:20px;
-            height:30px;
+        .hero-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        #countdown{
-            font-size:20px;
-            margin-bottom:30px;
+        .hero-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.3);
         }
 
-        button{
-            padding:15px 35px;
-            font-size:20px;
-            border:none;
-            border-radius:40px;
-            background:white;
-            color:#ff4e8a;
-            cursor:pointer;
-            transition:0.3s;
+        .floating {
+            animation: floating 3s ease-in-out infinite;
         }
 
-        button:hover{
-            background:#ff4e8a;
-            color:white;
-            transform:scale(1.1);
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
         }
 
-        .heart{
-            position:absolute;
-            color:white;
-            font-size:20px;
-            animation:float 5s linear infinite;
-        }
-
-        @keyframes float{
-            0%{
-                transform:translateY(100vh) scale(0);
-                opacity:1;
-            }
-            100%{
-                transform:translateY(-10vh) scale(1.5);
-                opacity:0;
-            }
-        }
-
-        .popup{
-            position:fixed;
-            top:50%;
-            left:50%;
-            transform:translate(-50%,-50%);
-            background:white;
-            color:#ff4e8a;
-            padding:30px;
-            border-radius:20px;
-            display:none;
-            text-align:center;
+        canvas {
+            display: block;
         }
     </style>
 </head>
 <body>
 
-<h1>💖 Ananto ❤️ Roza 💖</h1>
+    <!-- ব্যাকগ্রাউন্ড এনিমেশন ক্যানভাস -->
+    <canvas id="canvas"></canvas>
 
-<div id="typing"></div>
+    <main class="relative z-10">
+        <!-- হিরো সেকশন -->
+        <section class="min-h-screen flex flex-col items-center justify-center px-4">
+            <div class="text-center">
+                <h1 id="title" class="text-5xl md:text-7xl font-bold mb-6 opacity-0">
+                    ভবিষ্যতের <span class="gradient-text">ডিজাইন</span> এখন আপনার হাতে
+                </h1>
+                <p id="subtitle" class="text-lg md:text-xl text-slate-400 mb-8 max-w-2xl mx-auto opacity-0">
+                    আমরা তৈরি করি এমন কিছু যা শুধু দেখা যায় না, বরং অনুভব করা যায়। আধুনিক এনিমেশন এবং প্রিমিয়াম লুকের এক অনন্য সংমিশ্রণ।
+                </p>
+                <div id="btn-container" class="opacity-0">
+                    <button class="hero-btn bg-sky-500 hover:bg-sky-400 text-white px-8 py-4 rounded-full font-semibold text-lg">
+                        শুরু করা যাক
+                    </button>
+                </div>
+            </div>
 
-<div id="countdown"></div>
+            <!-- মাউস আইকন এনিমেশন -->
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 floating">
+                <div class="w-6 h-10 border-2 border-slate-500 rounded-full flex justify-center p-1">
+                    <div class="w-1 h-2 bg-slate-500 rounded-full animate-bounce"></div>
+                </div>
+            </div>
+        </section>
 
-<button onclick="showPopup()">Will You Be Mine? 💌</button>
+        <!-- ফিচার সেকশন -->
+        <section class="py-20 px-6 max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 gradient-text">কেন আমাদের পছন্দ করবেন?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- কার্ড ১ -->
+                <div class="feature-card glass-card p-8 text-center hover:bg-white/10 transition-colors">
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h3 class="text-xl font-bold mb-2">দ্রুত গতি</h3>
+                    <p class="text-slate-400">অত্যন্ত হালকা এবং সুপার ফাস্ট লোডিং অভিজ্ঞতা।</p>
+                </div>
 
-<div class="popup" id="popup">
-    <h2>Forever & Always 💞</h2>
-    <button onclick="closePopup()">Close</button>
-</div>
+                <!-- কার্ড ২ -->
+                <div class="feature-card glass-card p-8 text-center hover:bg-white/10 transition-colors">
+                    <div class="text-4xl mb-4">🎨</div>
+                    <h3 class="text-xl font-bold mb-2">আধুনিক ডিজাইন</h3>
+                    <p class="text-slate-400">প্রতিটি পিক্সেল সাজানো হয়েছে নিখুঁতভাবে।</p>
+                </div>
 
-<script>
-    // Typing Effect
-    const text = "You are my heart, my soul, my everything 💕";
-    let i = 0;
-    function typeWriter(){
-        if(i < text.length){
-            document.getElementById("typing").innerHTML += text.charAt(i);
-            i++;
-            setTimeout(typeWriter, 60);
+                <!-- কার্ড ৩ -->
+                <div class="feature-card glass-card p-8 text-center hover:bg-white/10 transition-colors">
+                    <div class="text-4xl mb-4">✨</div>
+                    <h3 class="text-xl font-bold mb-2">স্মুথ এনিমেশন</h3>
+                    <p class="text-slate-400">ব্যবহারকারীর ইন্টারঅ্যাকশনে প্রাণবন্ত অনুভূতি।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ফুট সেকশন -->
+        <footer class="py-10 text-center text-slate-500 border-t border-white/5">
+            <p>© ২০২৪ আপনার নাম। সর্বস্বত্ব সংরক্ষিত।</p>
+        </footer>
+    </main>
+
+    <script>
+        // কণা (Particles) এনিমেশন লজিক
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 150 };
+
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.zIndex = '0';
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
-    }
-    typeWriter();
 
-    // Countdown to August 10 (next occurrence)
-    function updateCountdown(){
-        const now = new Date();
-        let year = now.getFullYear();
-        let birthday = new Date(year, 7, 10); // August = 7
+        window.addEventListener('resize', resize);
+        resize();
 
-        if(now > birthday){
-            birthday = new Date(year + 1, 7, 10);
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.baseX = this.x;
+                this.baseY = this.y;
+                this.density = (Math.random() * 30) + 1;
+            }
+
+            draw() {
+                ctx.fillStyle = 'rgba(56, 189, 248, 0.5)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            update() {
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                let forceDirectionX = dx / distance;
+                let forceDirectionY = dy / distance;
+                let maxDistance = mouse.radius;
+                let force = (maxDistance - distance) / maxDistance;
+                let directionX = forceDirectionX * force * this.density;
+                let directionY = forceDirectionY * force * this.density;
+
+                if (distance < mouse.radius) {
+                    this.x -= directionX;
+                    this.y -= directionY;
+                } else {
+                    if (this.x !== this.baseX) {
+                        let dx = this.x - this.baseX;
+                        this.x -= dx / 10;
+                    }
+                    if (this.y !== this.baseY) {
+                        let dy = this.y - this.baseY;
+                        this.y -= dy / 10;
+                    }
+                }
+            }
         }
 
-        const diff = birthday - now;
+        function init() {
+            particles = [];
+            for (let i = 0; i < 150; i++) {
+                particles.push(new Particle());
+            }
+        }
 
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((diff / 1000 / 60) % 60);
-        const seconds = Math.floor((diff / 1000) % 60);
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].draw();
+                particles[i].update();
+            }
+            requestAnimationFrame(animate);
+        }
 
-        document.getElementById("countdown").innerHTML =
-            "Countdown to August 10 🎂: " +
-            days + "d " + hours + "h " +
-            minutes + "m " + seconds + "s ";
-    }
+        init();
+        animate();
 
-    setInterval(updateCountdown,1000);
+        // GSAP এনিমেশন
+        window.onload = () => {
+            const tl = gsap.timeline();
 
-    // Floating Hearts
-    function createHeart(){
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerHTML="💖";
-        heart.style.left=Math.random()*100+"vw";
-        heart.style.animationDuration=Math.random()*3+3+"s";
-        document.body.appendChild(heart);
+            tl.to("#title", { opacity: 1, y: -20, duration: 1, ease: "power4.out" })
+              .to("#subtitle", { opacity: 1, y: -20, duration: 1, ease: "power4.out" }, "-=0.6")
+              .to("#btn-container", { opacity: 1, y: -20, duration: 1, ease: "power4.out" }, "-=0.6");
 
-        setTimeout(()=>{
-            heart.remove();
-        },5000);
-    }
-    setInterval(createHeart,300);
-
-    // Popup
-    function showPopup(){
-        document.getElementById("popup").style.display="block";
-    }
-
-    function closePopup(){
-        document.getElementById("popup").style.display="none";
-    }
-</script>
-
+            // স্ক্রল এনিমেশন
+            gsap.registerPlugin(ScrollTrigger);
+            
+            gsap.from(".feature-card", {
+                scrollTrigger: {
+                    trigger: ".feature-card",
+                    start: "top 80%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2
+            });
+        };
+    </script>
 </body>
 </html>
