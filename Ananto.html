@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ananto ❤️ Roza</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body{
+            display:flex;
+            justify-content:center;
+            align-items:center; 
+            flex-direction:column;
+            height:100vh;
+            background:linear-gradient(-45deg,#ff4e8a,#ff9a9e,#fad0c4,#ffdde1);
+            background-size:400% 400%;
+            animation:gradientBG 8s ease infinite;
+            overflow:hidden;
+            text-align:center;
+            color:white;
+        }
+
+        @keyframes gradientBG {
+            0%{background-position:0% 50%;}
+            50%{background-position:100% 50%;}
+            100%{background-position:0% 50%;}
+        }
+
+        h1{
+            font-size:40px;
+            margin-bottom:15px;
+        }
+
+        #typing{
+            font-size:24px;
+            margin-bottom:20px;
+            height:30px;
+        }
+
+        #countdown{
+            font-size:20px;
+            margin-bottom:30px;
+        }
+
+        button{
+            padding:15px 35px;
+            font-size:20px;
+            border:none;
+            border-radius:40px;
+            background:white;
+            color:#ff4e8a;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        button:hover{
+            background:#ff4e8a;
+            color:white;
+            transform:scale(1.1);
+        }
+
+        .heart{
+            position:absolute;
+            color:white;
+            font-size:20px;
+            animation:float 5s linear infinite;
+        }
+
+        @keyframes float{
+            0%{
+                transform:translateY(100vh) scale(0);
+                opacity:1;
+            }
+            100%{
+                transform:translateY(-10vh) scale(1.5);
+                opacity:0;
+            }
+        }
+
+        .popup{
+            position:fixed;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+            background:white;
+            color:#ff4e8a;
+            padding:30px;
+            border-radius:20px;
+            display:none;
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+
+<h1>💖 Ananto ❤️ Roza 💖</h1>
+
+<div id="typing"></div>
+
+<div id="countdown"></div>
+
+<button onclick="showPopup()">Will You Be Mine? 💌</button>
+
+<div class="popup" id="popup">
+    <h2>Forever & Always 💞</h2>
+    <button onclick="closePopup()">Close</button>
+</div>
+
+<script>
+    // Typing Effect
+    const text = "You are my heart, my soul, my everything 💕";
+    let i = 0;
+    function typeWriter(){
+        if(i < text.length){
+            document.getElementById("typing").innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, 60);
+        }
+    }
+    typeWriter();
+
+    // Countdown to August 10 (next occurrence)
+    function updateCountdown(){
+        const now = new Date();
+        let year = now.getFullYear();
+        let birthday = new Date(year, 7, 10); // August = 7
+
+        if(now > birthday){
+            birthday = new Date(year + 1, 7, 10);
+        }
+
+        const diff = birthday - now;
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / 1000 / 60) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        document.getElementById("countdown").innerHTML =
+            "Countdown to August 10 🎂: " +
+            days + "d " + hours + "h " +
+            minutes + "m " + seconds + "s ";
+    }
+
+    setInterval(updateCountdown,1000);
+
+    // Floating Hearts
+    function createHeart(){
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML="💖";
+        heart.style.left=Math.random()*100+"vw";
+        heart.style.animationDuration=Math.random()*3+3+"s";
+        document.body.appendChild(heart);
+
+        setTimeout(()=>{
+            heart.remove();
+        },5000);
+    }
+    setInterval(createHeart,300);
+
+    // Popup
+    function showPopup(){
+        document.getElementById("popup").style.display="block";
+    }
+
+    function closePopup(){
+        document.getElementById("popup").style.display="none";
+    }
+</script>
+
+</body>
+</html>
